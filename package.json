@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Fuzz testing for jest",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": "git@github.com:jeffersonmourak/jest-fuzz.git",
   "author": "Jefferson Oliveira <jeffersonmourak@gmail.com>",
   "license": "MIT",
