@@ -90,8 +90,8 @@ const example1 = Fuzz.Fuzzer({
 const example2 = Fuzz.array({type: Fuzz.int()});
 
 // : Fuzz.FuzzGenerator<[boolean, boolean][]>
-const example2 = Fuzz.array({type: Fuzz.bool(), minLength:2, length:2});
-Fuzz.test("Logic Ops", example2, [lhs,rhs] => {
+const example3 = Fuzz.array({type: Fuzz.bool(), minLength:2, length:2});
+Fuzz.test("Logic Ops", example3, ([lhs, rhs]) => {
 	let expected = lhs && rhs;
 	let actual = LogicalAndFunction(lhs, rhs);
 
