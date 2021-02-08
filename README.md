@@ -56,11 +56,46 @@ To create you simply need to use the `Fuzz.Fuzzer`
 
 ```javascript
 const exampleFuzzer = Fuzz.Fuzzer({
-    method1: Fuzz.string(),
-    method2: Fuzz.int()
+    id: Fuzz.string(),
+    value: Fuzz.int()
 });
 
 Fuzz.test("My example", exampleFuzzer(), data => {
-    // Test data.
+    // Test data;
+	let Map = new Map();
+
+	Map.set(data.id, data.value);
+	expect( Map.get(data.id) ).toBe( data.value );
 }
 ```
+
+
+## Typescript
+
+TypeScript annotations are now included in the `jest-fuzz` package. Some of the features of these annotations include...
+
+ * Autocomplete of the `options` objects for all built-in fuzzers.
+ * Type inference and checking of the data injected into your tests.
+ * Inference of the type of custom fuzzer objects.
+ * Statically fixed-length arrays get annotated as though they are Tuples. 
+
+```javascript
+// : Fuzz.FuzzGenerator<{id:string, value:number}>
+const example1 = Fuzz.Fuzzer({
+    id: Fuzz.string(),
+    value: Fuzz.int()
+});
+
+// : Fuzz.FuzzGenerator<number[]>
+const example2 = Fuzz.array({type: Fuzz.int()});
+
+// : Fuzz.FuzzGenerator<[boolean, boolean][]>
+const example2 = Fuzz.array({type: Fuzz.bool(), minLength:2, length:2});
+Fuzz.test("Logic Ops", example2, [lhs,rhs] => {
+	let expected = lhs && rhs;
+	let actual = LogicalAndFunction(lhs, rhs);
+
+	expect(actual).toBe( expected );
+});
+```
+
